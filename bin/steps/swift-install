@@ -10,4 +10,5 @@ mkdir -p $BUILD_DIR/.swift-bin
 find -L .build/$SWIFT_BUILD_CONFIGURATION ! -name '*.so' -type f -perm /a+x -exec cp {} $BUILD_DIR/.swift-bin \; || true 2>/dev/null
 
 puts-step "Cleaning up after build"
+swift package describe --type=json | grep -Po '\n\s{3,}"path":\s*"(.*?)"' | xargs -0 rm -rvf --
 rm -rf .build
